@@ -1,0 +1,10 @@
+{
+  "case_id": "measurement_unit_literal",
+  "calls": [
+    {
+      "text": "{\"value\": 343.0, \"unit\": \"meters per second\"}",
+      "tool_calls": [],
+      "stop_reason": "end_turn"
+    }
+  ]
+}

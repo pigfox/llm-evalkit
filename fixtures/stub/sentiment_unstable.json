@@ -1,0 +1,20 @@
+{
+  "case_id": "sentiment_unstable",
+  "calls": [
+    {
+      "text": "{\"label\": \"positive\", \"confidence\": 0.55}",
+      "tool_calls": [],
+      "stop_reason": "end_turn"
+    },
+    {
+      "text": "{\"label\": \"negative\", \"confidence\": 0.52}",
+      "tool_calls": [],
+      "stop_reason": "end_turn"
+    },
+    {
+      "text": "{\"label\": \"positive\", \"confidence\": 0.58}",
+      "tool_calls": [],
+      "stop_reason": "end_turn"
+    }
+  ]
+}

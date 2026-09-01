@@ -1,0 +1,10 @@
+{
+  "case_id": "sentiment_ambiguous_hedge",
+  "calls": [
+    {
+      "text": "{\"label\": \"negative\", \"confidence\": 0.61}",
+      "tool_calls": [],
+      "stop_reason": "end_turn"
+    }
+  ]
+}

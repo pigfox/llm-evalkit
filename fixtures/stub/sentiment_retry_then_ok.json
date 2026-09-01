@@ -1,0 +1,20 @@
+{
+  "case_id": "sentiment_retry_then_ok",
+  "calls": [
+    {
+      "attempts": [
+        {
+          "error": {
+            "type": "OverloadedError",
+            "message": "529 overloaded_error"
+          }
+        },
+        {
+          "text": "{\"label\": \"negative\", \"confidence\": 0.93}",
+          "tool_calls": [],
+          "stop_reason": "end_turn"
+        }
+      ]
+    }
+  ]
+}

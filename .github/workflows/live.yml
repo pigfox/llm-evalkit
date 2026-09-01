@@ -1,0 +1,63 @@
+name: live
+
+# Manual only. This is the workflow that spends money and produces a real
+# measurement of a real model; nothing about a push should be able to trigger
+# it, so there is no `push:` or `pull_request:` trigger here.
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: "Model id to evaluate"
+        required: false
+        default: "claude-sonnet-5"
+      k:
+        description: "Runs per case"
+        required: false
+        default: "3"
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: src
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install locked dependencies
+        run: python -m pip install -r requirements-lock.txt
+
+      # An absent secret is a skip, not a failure. A fork, or a clone that has
+      # never been given a key, should be able to dispatch this and get a clear
+      # "nothing to do" rather than a red run it cannot fix.
+      - name: Check for an API key
+        id: guard
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "${ANTHROPIC_API_KEY}" ]; then
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "ANTHROPIC_API_KEY is not set for this repository; skipping the live suite."
+          else
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run the suite against the real API
+        if: steps.guard.outputs.present == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python -m evalkit run \
+            --provider anthropic \
+            --model "${{ inputs.model }}" \
+            -k "${{ inputs.k }}"
+          python -m evalkit grade
+          python -m evalkit report
+
+      - name: Upload the run and the report
+        if: steps.guard.outputs.present == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-run
+          path: runs/

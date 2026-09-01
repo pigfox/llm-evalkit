@@ -1,0 +1,18 @@
+{
+  "case_id": "weather_tool_call",
+  "calls": [
+    {
+      "text": "I will look that up for you.",
+      "tool_calls": [
+        {
+          "name": "get_weather",
+          "arguments": {
+            "location": "Reykjavik",
+            "unit": "celsius"
+          }
+        }
+      ],
+      "stop_reason": "tool_use"
+    }
+  ]
+}

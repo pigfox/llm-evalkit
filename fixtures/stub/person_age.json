@@ -1,0 +1,10 @@
+{
+  "case_id": "person_age",
+  "calls": [
+    {
+      "text": "```json\n{\n  \"name\": \"Ada Lovelace\",\n  \"age\": 36,\n  \"email\": \"ada@example.org\"\n}\n```",
+      "tool_calls": [],
+      "stop_reason": "end_turn"
+    }
+  ]
+}

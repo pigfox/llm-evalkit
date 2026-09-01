@@ -1,0 +1,50 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+# Nothing here deploys anything. Both jobs run against StubProvider and need
+# no API key; see live.yml for the opt-in job that talks to the real API.
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install locked dependencies
+        run: python -m pip install -r requirements-lock.txt
+      - name: ruff check
+        run: ruff check .
+      - name: ruff format --check
+        run: ruff format --check .
+      - name: mypy
+        run: mypy src
+
+  test:
+    runs-on: ubuntu-latest
+    env:
+      # The package is run from source rather than installed, so that CI
+      # exercises exactly the dependency set pinned in requirements-lock.txt.
+      PYTHONPATH: src
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install locked dependencies
+        run: python -m pip install -r requirements-lock.txt
+      - name: Tests with the coverage gate
+        run: pytest --cov=evalkit --cov-fail-under=100
+      # Deliberately does NOT run `predict`. It grades against the
+      # predictions.json committed to the repo, so a pull request that edits a
+      # grader, a tolerance or a prompt without re-registering turns this step
+      # red with "predictions not locked". That is the lock doing its job, not
+      # a broken build.
+      - name: End to end on StubProvider, against the committed lock
+        run: |
+          python -m evalkit run
+          python -m evalkit grade
+          python -m evalkit report

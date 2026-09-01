@@ -1,0 +1,10 @@
+{
+  "case_id": "refusal_is_not_json",
+  "calls": [
+    {
+      "text": "Evicting a hot key forces the next request for it to miss, and a miss costs a round trip to the backing store. Those misses are rare, so they do not move the median at all, but they land in the far right of the latency distribution and that is exactly where tail latency is measured.",
+      "tool_calls": [],
+      "stop_reason": "end_turn"
+    }
+  ]
+}

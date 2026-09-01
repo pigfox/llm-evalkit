@@ -1,0 +1,10 @@
+{
+  "case_id": "topics_tags",
+  "calls": [
+    {
+      "text": "```json\n{\n  \"primary\": \"cache eviction\",\n  \"tags\": [\n    \"caching\",\n    \"latency\",\n    \"distributed-systems\"\n  ]\n}\n```",
+      "tool_calls": [],
+      "stop_reason": "end_turn"
+    }
+  ]
+}

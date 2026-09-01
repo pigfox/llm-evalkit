@@ -1,0 +1,10 @@
+{
+  "case_id": "sentiment_clear_positive",
+  "calls": [
+    {
+      "text": "{\"label\": \"positive\", \"confidence\": 0.96}",
+      "tool_calls": [],
+      "stop_reason": "end_turn"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "case_id": "invoice_line_items",
+  "calls": [
+    {
+      "text": "Here is the invoice as JSON:\n{\"total\": 1284.5, \"currency\": \"USD\", \"line_items\": [\"Consulting\", \"Hosting\", \"Support\", \"Total\"]}",
+      "tool_calls": [],
+      "stop_reason": "end_turn"
+    }
+  ]
+}

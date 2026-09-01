@@ -1,0 +1,66 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "llm-evalkit"
+version = "0.1.0"
+description = "Pre-registered, deterministically graded evaluation harness for structured LLM outputs."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Pigfox LLC" }]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+# Pinned to requirements-lock.txt, which is what CI installs and what the
+# recorded results were produced under.
+dependencies = [
+  "pydantic==2.13.5",
+  "httpx==0.28.1",
+  "anthropic==1.2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest==9.1.1",
+  "pytest-cov==7.1.0",
+  "ruff==0.16.5",
+  "mypy==2.3.1",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/evalkit"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF", "C4", "PTH"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+mypy_path = "src"
+plugins = ["pydantic.mypy"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q"
+
+[tool.coverage.run]
+source = ["evalkit"]
+
+[tool.coverage.report]
+show_missing = true
+exclude_lines = [
+  "pragma: no cover",
+  "if TYPE_CHECKING:",
+  "^\\s*\\.\\.\\.$",
+  "if __name__ == .__main__.:",
+]

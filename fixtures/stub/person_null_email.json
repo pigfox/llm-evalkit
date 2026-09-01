@@ -1,0 +1,10 @@
+{
+  "case_id": "person_null_email",
+  "calls": [
+    {
+      "text": "{\"name\": \"Grace Hopper\", \"age\": 45, \"email\": null}",
+      "tool_calls": [],
+      "stop_reason": "end_turn"
+    }
+  ]
+}

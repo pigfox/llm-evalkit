@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-01T16:03:01+00:00",
+  "case_count": 16,
+  "predicted_pass_rate": 0.875,
+  "cases": [
+    {
+      "id": "sentiment_clear_positive",
+      "predicted_pass": true,
+      "predicted_notes": "Unambiguously positive review with no hedging; this is the easy case."
+    },
+    {
+      "id": "sentiment_ambiguous_hedge",
+      "predicted_pass": false,
+      "predicted_notes": "PREDICTED FAIL. The review is neutral overall but ends on a concrete complaint. Models weight the last clause heavily and we expect 'negative'."
+    },
+    {
+      "id": "sentiment_confidence_range",
+      "predicted_pass": true,
+      "predicted_notes": "Emphatic review; self-reported confidence should land in [0.8, 1.0]."
+    },
+    {
+      "id": "person_name",
+      "predicted_pass": true,
+      "predicted_notes": "Name is stated verbatim; extraction is copying, not inference."
+    },
+    {
+      "id": "person_age",
+      "predicted_pass": true,
+      "predicted_notes": "Age is stated as a numeral and needs no arithmetic."
+    },
+    {
+      "id": "person_null_email",
+      "predicted_pass": true,
+      "predicted_notes": "The instruction to use null is explicit; we expect null rather than an invented address or an empty string."
+    },
+    {
+      "id": "invoice_total",
+      "predicted_pass": true,
+      "predicted_notes": "Three-term addition; well inside what current models do reliably."
+    },
+    {
+      "id": "invoice_currency",
+      "predicted_pass": true,
+      "predicted_notes": "Currency is stated three times and the schema constrains it to three characters."
+    },
+    {
+      "id": "invoice_line_items",
+      "predicted_pass": true,
+      "predicted_notes": "Three services are named explicitly and 'only the billed services' rules out a summary row."
+    },
+    {
+      "id": "topics_tags",
+      "predicted_pass": true,
+      "predicted_notes": "The three concepts are named in the abstract and the tag vocabulary is constrained by the prompt's 'up to four'."
+    },
+    {
+      "id": "refusal_is_not_json",
+      "predicted_pass": true,
+      "predicted_notes": "The prompt forbids JSON, so the correct outcome is a parse failure. This case exists to keep ParseFailure a graded result rather than an unhandled hole."
+    },
+    {
+      "id": "measurement_valid_schema",
+      "predicted_pass": true,
+      "predicted_notes": "Two flat fields with no enum; the schema is easy to satisfy."
+    },
+    {
+      "id": "measurement_unit_literal",
+      "predicted_pass": false,
+      "predicted_notes": "PREDICTED FAIL. The prompt spells the unit out in words and never asks for symbol form, so we expect 'meters per second' back. The grader demands 'm/s'. This is a badly specified case and it is kept to show the harness reporting one."
+    },
+    {
+      "id": "weather_tool_call",
+      "predicted_pass": true,
+      "predicted_notes": "Both arguments are stated in the prompt and the tool has a required enum. Graded on the call alone; whatever prose accompanies it is ignored."
+    },
+    {
+      "id": "sentiment_retry_then_ok",
+      "predicted_pass": true,
+      "predicted_notes": "Unambiguously negative. The fixture scripts a 529 on the first attempt so the default suite exercises the retry path and the attempt records are non-empty."
+    },
+    {
+      "id": "sentiment_unstable",
+      "predicted_pass": true,
+      "predicted_notes": "A backhanded compliment that resolves positive on balance. We predict the model agrees, and predict it does so consistently."
+    }
+  ],
+  "lock": "47a8685cae60fe9e3dedf83385aa42d2d11519891e8a64c83ebfd45b4dcd0dea"
+}

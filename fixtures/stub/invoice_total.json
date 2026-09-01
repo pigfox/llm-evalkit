@@ -1,0 +1,10 @@
+{
+  "case_id": "invoice_total",
+  "calls": [
+    {
+      "text": "{\"total\": 1284.5, \"currency\": \"USD\", \"line_items\": [\"Consulting\", \"Hosting\", \"Support\"]}",
+      "tool_calls": [],
+      "stop_reason": "end_turn"
+    }
+  ]
+}

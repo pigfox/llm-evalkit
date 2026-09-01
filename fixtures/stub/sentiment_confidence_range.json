@@ -1,0 +1,10 @@
+{
+  "case_id": "sentiment_confidence_range",
+  "calls": [
+    {
+      "text": "{\"label\": \"positive\", \"confidence\": 0.95}",
+      "tool_calls": [],
+      "stop_reason": "end_turn"
+    }
+  ]
+}
