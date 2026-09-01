@@ -1,0 +1,1000 @@
+{
+  "schema_version": 1,
+  "evalkit_version": "0.1.0",
+  "started_at": "2026-09-01T16:49:34+00:00",
+  "finished_at": "2026-09-01T16:51:08+00:00",
+  "k": 3,
+  "model_id": "claude-sonnet-5",
+  "provider_class": "AnthropicProvider",
+  "env": {
+    "python": "3.12.14",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "implementation": "CPython"
+  },
+  "cases": [
+    {
+      "case_id": "sentiment_clear_positive",
+      "agreement_rate": 0.6666666666666666,
+      "outputs": [
+        {
+          "index": 1,
+          "text": "```json\n{\"label\": \"positive\", \"confidence\": 0.97}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1196,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1196,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "{\"label\": \"positive\", \"confidence\": 0.98}",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 996,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 996,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "```json\n{\"label\": \"positive\", \"confidence\": 0.98}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1179,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1179,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "case_id": "sentiment_ambiguous_hedge",
+      "agreement_rate": 1.0,
+      "outputs": [
+        {
+          "index": 1,
+          "text": "{\"label\": \"neutral\", \"confidence\": 0.85}",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 2066,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 2066,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "```json\n{\"label\": \"neutral\", \"confidence\": 0.85}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 2105,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 2105,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "```json\n{\"label\": \"neutral\", \"confidence\": 0.85}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 2155,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 2155,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "case_id": "sentiment_confidence_range",
+      "agreement_rate": 1.0,
+      "outputs": [
+        {
+          "index": 1,
+          "text": "```json\n{\"label\": \"positive\", \"confidence\": 0.98}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 2051,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 2051,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "{\"label\": \"positive\", \"confidence\": 0.98}",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 2064,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 2064,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "{\"label\": \"positive\", \"confidence\": 0.98}",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1974,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1974,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "case_id": "person_name",
+      "agreement_rate": 1.0,
+      "outputs": [
+        {
+          "index": 1,
+          "text": "```json\n{\"name\": \"Ada Lovelace\", \"age\": 36, \"email\": \"ada@example.org\"}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1180,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1180,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "{\"name\": \"Ada Lovelace\", \"age\": 36, \"email\": \"ada@example.org\"}",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1112,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1112,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "```json\n{\"name\": \"Ada Lovelace\", \"age\": 36, \"email\": \"ada@example.org\"}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1273,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1273,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "case_id": "person_age",
+      "agreement_rate": 1.0,
+      "outputs": [
+        {
+          "index": 1,
+          "text": "```json\n{\n  \"name\": \"Ada Lovelace\",\n  \"age\": 36,\n  \"email\": \"ada@example.org\"\n}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1213,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1213,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "```json\n{\"name\": \"Ada Lovelace\", \"age\": 36, \"email\": \"ada@example.org\"}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1132,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1132,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "```json\n{\"name\": \"Ada Lovelace\", \"age\": 36, \"email\": \"ada@example.org\"}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 8225,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 8225,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "case_id": "person_null_email",
+      "agreement_rate": 1.0,
+      "outputs": [
+        {
+          "index": 1,
+          "text": "```json\n{\n  \"name\": \"Grace Hopper\",\n  \"age\": 45,\n  \"email\": null\n}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1230,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1230,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "{\"name\": \"Grace Hopper\", \"age\": 45, \"email\": null}",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1211,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1211,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "```json\n{\n  \"name\": \"Grace Hopper\",\n  \"age\": 45,\n  \"email\": null\n}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1270,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1270,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "case_id": "invoice_total",
+      "agreement_rate": 0.6666666666666666,
+      "outputs": [
+        {
+          "index": 1,
+          "text": "```json\n{\n  \"total\": 1284.50,\n  \"currency\": \"USD\",\n  \"line_items\": [\n    {\n      \"description\": \"Consulting\",\n      \"amount\": 1000.00,\n      \"currency\": \"USD\"\n    },\n    {\n      \"description\": \"Hosting\",\n      \"amount\": 234.50,\n      \"currency\": \"USD\"\n    },\n    {\n      \"description\": \"Support\",\n      \"amount\": 50.00,\n      \"currency\": \"USD\"\n    }\n  ]\n}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1930,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1930,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "```json\n{\n  \"total\": 1284.50,\n  \"currency\": \"USD\",\n  \"line_items\": [\n    {\"description\": \"Consulting\", \"amount\": 1000.00, \"currency\": \"USD\"},\n    {\"description\": \"Hosting\", \"amount\": 234.50, \"currency\": \"USD\"},\n    {\"description\": \"Support\", \"amount\": 50.00, \"currency\": \"USD\"}\n  ]\n}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1704,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1704,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "```json\n{\n  \"total\": 1284.50,\n  \"currency\": \"USD\",\n  \"line_items\": [\n    {\n      \"description\": \"Consulting\",\n      \"amount\": 1000.00,\n      \"currency\": \"USD\"\n    },\n    {\n      \"description\": \"Hosting\",\n      \"amount\": 234.50,\n      \"currency\": \"USD\"\n    },\n    {\n      \"description\": \"Support\",\n      \"amount\": 50.00,\n      \"currency\": \"USD\"\n    }\n  ]\n}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1719,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1719,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "case_id": "invoice_currency",
+      "agreement_rate": 1.0,
+      "outputs": [
+        {
+          "index": 1,
+          "text": "```json\n{\n  \"total\": 1284.50,\n  \"currency\": \"USD\",\n  \"line_items\": [\n    {\n      \"description\": \"Consulting\",\n      \"amount\": 1000.00,\n      \"currency\": \"USD\"\n    },\n    {\n      \"description\": \"Hosting\",\n      \"amount\": 234.50,\n      \"currency\": \"USD\"\n    },\n    {\n      \"description\": \"Support\",\n      \"amount\": 50.00,\n      \"currency\": \"USD\"\n    }\n  ]\n}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1832,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1832,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "```json\n{\n  \"total\": 1284.50,\n  \"currency\": \"USD\",\n  \"line_items\": [\n    {\n      \"description\": \"Consulting\",\n      \"amount\": 1000.00,\n      \"currency\": \"USD\"\n    },\n    {\n      \"description\": \"Hosting\",\n      \"amount\": 234.50,\n      \"currency\": \"USD\"\n    },\n    {\n      \"description\": \"Support\",\n      \"amount\": 50.00,\n      \"currency\": \"USD\"\n    }\n  ]\n}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1900,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1900,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "```json\n{\n  \"total\": 1284.50,\n  \"currency\": \"USD\",\n  \"line_items\": [\n    {\n      \"description\": \"Consulting\",\n      \"amount\": 1000.00,\n      \"currency\": \"USD\"\n    },\n    {\n      \"description\": \"Hosting\",\n      \"amount\": 234.50,\n      \"currency\": \"USD\"\n    },\n    {\n      \"description\": \"Support\",\n      \"amount\": 50.00,\n      \"currency\": \"USD\"\n    }\n  ]\n}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1911,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1911,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "case_id": "invoice_line_items",
+      "agreement_rate": 0.6666666666666666,
+      "outputs": [
+        {
+          "index": 1,
+          "text": "```json\n{\n  \"total\": 1284.50,\n  \"currency\": \"USD\",\n  \"line_items\": [\n    {\n      \"description\": \"Consulting\",\n      \"amount\": 1000.00\n    },\n    {\n      \"description\": \"Hosting\",\n      \"amount\": 234.50\n    },\n    {\n      \"description\": \"Support\",\n      \"amount\": 50.00\n    }\n  ]\n}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1742,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1742,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "```json\n{\n  \"total\": 1284.50,\n  \"currency\": \"USD\",\n  \"line_items\": [\n    {\n      \"description\": \"Consulting\",\n      \"amount\": 1000.00,\n      \"currency\": \"USD\"\n    },\n    {\n      \"description\": \"Hosting\",\n      \"amount\": 234.50,\n      \"currency\": \"USD\"\n    },\n    {\n      \"description\": \"Support\",\n      \"amount\": 50.00,\n      \"currency\": \"USD\"\n    }\n  ]\n}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1826,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1826,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "```json\n{\n  \"total\": 1284.50,\n  \"currency\": \"USD\",\n  \"line_items\": [\n    {\n      \"description\": \"Consulting\",\n      \"amount\": 1000.00\n    },\n    {\n      \"description\": \"Hosting\",\n      \"amount\": 234.50\n    },\n    {\n      \"description\": \"Support\",\n      \"amount\": 50.00\n    }\n  ]\n}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1689,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1689,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "case_id": "topics_tags",
+      "agreement_rate": 0.3333333333333333,
+      "outputs": [
+        {
+          "index": 1,
+          "text": "{\"primary\": \"Cache eviction policy for distributed key-value stores\", \"tags\": [\"cache eviction\", \"tail latency\", \"distributed key-value stores\", \"skewed workloads\"]}",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1356,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1356,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "```json\n{\n  \"primary\": \"Cache eviction policy for distributed key-value stores\",\n  \"tags\": [\"cache eviction\", \"tail latency\", \"distributed systems\", \"key-value stores\"]\n}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1465,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1465,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "```json\n{\"primary\": \"Distributed Systems\", \"tags\": [\"cache eviction\", \"key-value stores\", \"tail latency\", \"load skew\"]}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1429,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1429,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "case_id": "refusal_is_not_json",
+      "agreement_rate": 0.3333333333333333,
+      "outputs": [
+        {
+          "index": 1,
+          "text": "A cache eviction policy shapes tail latency because it determines which items are kept readily available versus which are discarded and must be fetched again from slower backing storage. When the policy makes poor choices\u2014evicting items that are still frequently or imminently needed\u2014those requests become cache misses, forcing them onto a much slower path involving disk access, network calls, or database queries. While average latency may stay low if most requests hit the cache, the small fraction that miss can experience dramatically higher response times, and it is precisely these outliers that populate the tail of the latency distribution (e.g., p95, p99). Additionally, eviction policies that behave unpredictably or interact poorly with access patterns\u2014such as sudden bursts, cyclical workloads, or thundering-herd effects when many requests miss simultaneously\u2014can cause spikes in contention for backend resources, further inflating tail latency. Thus, the quality and predictability of an eviction policy directly governs how often and how severely requests fall off the fast path, making it a key lever for controlling worst-case response times even when it has little effect on the average case.",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 5555,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 5555,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "A cache eviction policy shapes tail latency because it determines how often requests miss the cache and fall back to slower backing stores or recomputation, and misses are rarely uniform in cost\u2014some hit a lock-contended path, a cold database connection, a network hop, or a large object that takes disproportionately long to fetch or rebuild. A poor policy, such as strict LRU under a workload with cyclic or bursty access patterns, can evict items that are about to be reused, causing correlated bursts of misses that queue up behind each other and inflate response times for a subset of unlucky requests, even if the average hit rate looks acceptable. Because tail latency metrics (like p99 or p999) are dominated by these rare but expensive events rather than typical behavior, the eviction policy's ability to keep \"hot\" or soon-to-be-needed items resident\u2014accounting for recency, frequency, size, and cost of recomputation\u2014directly controls how frequently and how severely those costly misses occur, and thus how heavy the tail becomes.",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 5607,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 5607,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "A cache eviction policy determines which items get discarded when the cache fills up, and a poor match between the policy and the actual access pattern causes frequently or soon-to-be-needed items to be evicted prematurely. When that happens, requests that would otherwise be fast cache hits become slow cache misses that must fall through to a backing store, database, or remote service. Because most requests still hit the cache and return quickly, the average latency may look fine, but the misses caused by bad eviction decisions cluster into the slow end of the distribution, inflating p95, p99, and other tail latency metrics. Additionally, mistimed evictions can trigger bursts of misses simultaneously (for example during traffic spikes or after a bulk invalidation), causing contention on the backing resource and further amplifying delays for the unlucky requests that miss, even though the system's typical behavior remains unaffected.",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 7501,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 7501,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "case_id": "measurement_valid_schema",
+      "agreement_rate": 1.0,
+      "outputs": [
+        {
+          "index": 1,
+          "text": "{\"value\": 343, \"unit\": \"metres per second\"}",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 957,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 957,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "{\"value\": 343, \"unit\": \"metres per second\"}",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1079,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1079,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "{\"value\": 343, \"unit\": \"metres per second\"}",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1013,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1013,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "case_id": "measurement_unit_literal",
+      "agreement_rate": 0.6666666666666666,
+      "outputs": [
+        {
+          "index": 1,
+          "text": "{\"value\": 343, \"unit\": \"meters per second\"}",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1017,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1017,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "{\"value\": 343, \"unit\": \"metres per second\"}",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1129,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1129,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "{\"value\": 343, \"unit\": \"metres per second\"}",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 988,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 988,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "case_id": "weather_tool_call",
+      "agreement_rate": 1.0,
+      "outputs": [
+        {
+          "index": 1,
+          "text": "",
+          "tool_calls": [
+            {
+              "name": "get_weather",
+              "arguments": {
+                "location": "Reykjavik",
+                "unit": "celsius"
+              }
+            }
+          ],
+          "stop_reason": "tool_use",
+          "latency_ms": 1540,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1540,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "",
+          "tool_calls": [
+            {
+              "name": "get_weather",
+              "arguments": {
+                "location": "Reykjavik",
+                "unit": "celsius"
+              }
+            }
+          ],
+          "stop_reason": "tool_use",
+          "latency_ms": 1395,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1395,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "",
+          "tool_calls": [
+            {
+              "name": "get_weather",
+              "arguments": {
+                "location": "Reykjavik",
+                "unit": "celsius"
+              }
+            }
+          ],
+          "stop_reason": "tool_use",
+          "latency_ms": 1502,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1502,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "case_id": "sentiment_retry_then_ok",
+      "agreement_rate": 0.6666666666666666,
+      "outputs": [
+        {
+          "index": 1,
+          "text": "```json\n{\"label\": \"negative\", \"confidence\": 0.98}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1119,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1119,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "```json\n{\"label\": \"negative\", \"confidence\": 0.97}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1148,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1148,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "{\"label\": \"negative\", \"confidence\": 0.98}",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1035,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1035,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "case_id": "sentiment_unstable",
+      "agreement_rate": 1.0,
+      "outputs": [
+        {
+          "index": 1,
+          "text": "```json\n{\"label\": \"neutral\", \"confidence\": 0.6}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 1990,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 1990,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "```json\n{\"label\": \"neutral\", \"confidence\": 0.6}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 2348,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 2348,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "```json\n{\"label\": \"neutral\", \"confidence\": 0.6}\n```",
+          "tool_calls": [],
+          "stop_reason": "end_turn",
+          "latency_ms": 2385,
+          "attempt_count": 1,
+          "attempts": [
+            {
+              "index": 1,
+              "outcome": "ok",
+              "duration_ms": 2385,
+              "error_type": null,
+              "error_message": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    }
+  ]
+}

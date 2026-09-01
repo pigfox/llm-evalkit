@@ -131,68 +131,143 @@ the retries that leaked through.
 
 **Known limitation, stated plainly:** `agreement_rate` compares the *whole*
 parsed object plus tool calls, so two outputs that agree on the graded field but
-differ in an ungraded float count as disagreement. In the results below,
-`sentiment_unstable` scores 0.33 rather than 0.67 for exactly that reason — its
-three outputs give confidences of 0.55, 0.52 and 0.58. This is the strict
-reading and it is the one implemented; if you want agreement on the graded
-outcome alone, that is a different metric and this code does not compute it.
+differ in an ungraded one count as disagreement. In the live run below,
+`sentiment_clear_positive` scores 0.67 while passing 3/3 — the label is
+`positive` every time and only the confidence moves, 0.97 against 0.98. This is
+the strict reading and it is the one implemented; if you want agreement on the
+graded outcome alone, that is a different metric and this code does not
+compute it.
 
 ## 5. Results
 
-**The headline result is that there is no result yet.** The numbers below come
-from `StubProvider` replaying hand-authored fixtures in `fixtures/stub/`. They
-demonstrate that the harness works — that the lock holds, that misses surface,
-that retries and disagreement are visible. **They are not a measurement of any
-model, and nothing in this repository has ever contacted the Anthropic API.**
+### Live: `claude-sonnet-5`, 2026-09-01
 
-Producing a real number means dispatching the `live` workflow with an
-`ANTHROPIC_API_KEY` secret, or running `--provider anthropic` locally. Until
-someone does that, the honest summary of this repository is "a method and a
-harness", not "a finding about a model". Publishing the fixture numbers as if
-they characterised a model would be the exact failure this design exists to
-prevent.
-
-With that said, here is the run, in full, misses included:
+Run via the `live` workflow, k=3, graded against the pre-registered
+`predictions.json` committed before any of it happened. The run file and the
+generated report are committed under
+[`results/`](results/2026-09-01-claude-sonnet-5.run.json).
 
 | | |
 | --- | --- |
+| Model | `claude-sonnet-5` via `AnthropicProvider` |
+| Run started | 2026-09-01T16:49:34Z |
 | Cases | 16, each run k=3 |
-| Predicted pass rate | **87.5%** |
-| Observed pass rate | **75.0%** |
-| Delta | **−12.5 percentage points** |
-| Misses | **2 of 16** |
+| Predicted pass rate | 87.5% |
+| **Observed pass rate** | **62.5%** |
+| **Delta** | **−25.0 percentage points** |
+| **Misses** | **6 of 16** |
+| Cases with agreement < 1.0 | 7 of 16 |
+
+**The predictions were wrong about six cases out of sixteen, and the suite came
+in twenty-five points below what was registered.** That is the result. No case,
+prompt, tolerance or prediction has been touched since — the lock over
+`graders.py` and `cases.py` is the same one written before the run, and it still
+verifies.
+
+#### The six misses
+
+**`sentiment_ambiguous_hedge` — predicted FAIL, observed pass, agreement 1.00.**
+Registered reasoning: *"The review is neutral overall but ends on a concrete
+complaint. Models weight the last clause heavily and we expect 'negative'."* The
+model returned `neutral` three times out of three. The prediction was wrong in
+the flattering direction, which is exactly the kind a report is tempted to bank
+quietly as a win. It is counted as a miss.
+
+**`invoice_total`, `invoice_currency`, `invoice_line_items` — all predicted
+pass, all observed FAIL** (agreement 0.67, 1.00, 0.67). Three misses with **one
+root cause**: the model returned `line_items` as objects —
+`{"description": "Consulting", "amount": 1000.00, "currency": "USD"}` — where
+the schema declares `list[str]`. The whole `Invoice` object therefore failed to
+validate, and every field read failed with *"output did not parse, so field
+'total' could not be read"*.
+
+The arithmetic was right. `1284.50` appears in all three outputs of all three
+cases. Two of these three cases do not even grade `line_items`. They failed
+anyway, because a schema is all-or-nothing and a field you are not grading can
+still sink the parse. Whether that is a finding about the model or about the
+case design is a fair question — and it is the kind of question you can only ask
+honestly *after* the fact if you wrote the prediction down *before* it.
+
+**`topics_tags` — predicted pass, observed FAIL, agreement 0.33.** The model's
+tags were semantically right and lexically different on every single run:
+
+```
+[1] cache eviction, distributed key-value stores, skewed workloads, tail latency
+[2] cache eviction, distributed systems, key-value stores, tail latency
+[3] cache eviction, key-value stores, load skew, tail latency
+```
+
+`field_set_equal` wanted exactly `caching, distributed-systems, latency` and
+matched not one of them by string. A grader that demands exact tokens from an
+open vocabulary is a brittle grader; the registration did not anticipate that,
+so it is a miss.
+
+**`sentiment_unstable` — predicted pass, observed FAIL, agreement 1.00.**
+Registered reasoning: *"A backhanded compliment that resolves positive on
+balance. We predict the model agrees, and predict it does so consistently."*
+Half right, and the wrong half. The model *was* perfectly consistent — it said
+`neutral` three times out of three. The stability prediction held; the label
+prediction did not.
+
+#### What was not a miss
+
+`measurement_unit_literal` was predicted to fail and failed, so it is not a
+miss. It is worth a line anyway: it returned `"meters per second"` once and
+`"metres per second"` twice. A spelling flip inside a single case, across three
+identical requests.
+
+#### Agreement, and why there is still no voting
+
+Seven of sixteen cases disagreed with themselves across three identical
+requests. What varied was mostly *below* the graded surface — `confidence` 0.97
+against 0.98, tag wording, three genuinely different prose paragraphs for the
+refusal case. `agreement_rate` compares the whole parsed object, so it sees all
+of that; the graders do not.
+
+**Being precise about what this run does and does not show:** every one of the
+sixteen cases was **unanimous on the graded outcome** — 3/3 or 0/3, no splits.
+So majority voting would have produced the same 62.5% on this run. It would not
+have flattered the score.
+
+That is not an argument for voting. Voting would have discarded all seven
+agreement figures, and a case that genuinely splits 2/1 is indistinguishable
+from a unanimous one once you have voted it. The fixture run below contains
+exactly such a case, and under voting it reads as a clean pass. The runner does
+not vote because the split is information, not noise to be resolved.
+
+Every case answered on the first attempt: 48 attempts across 48 outputs, no
+retries, no timeouts.
+
+### Fixture self-test: `StubProvider`
+
+These are **not** a measurement of any model. They come from `StubProvider`
+replaying hand-authored fixtures in `fixtures/stub/`, and they are kept because
+they exercise paths the live run does not — a scripted 529 retry, and a case
+that genuinely splits across k. This is what CI runs on every push.
+
+| | |
+| --- | --- |
+| Predicted pass rate | 87.5% |
+| Observed pass rate | 75.0% |
+| Delta | −12.5 percentage points |
+| Misses | 2 of 16 |
 | Cases with agreement < 1.0 | 1 |
 
-The suite came in **worse than predicted**, which is the ordinary outcome of
-predicting honestly. The two misses:
-
-**`invoice_line_items` — predicted pass, observed FAIL, agreement 1.00.**
-Registered reasoning: *"Three services are named explicitly and 'only the billed
-services' rules out a summary row."* All three outputs put a fourth entry,
-`Total`, into `line_items`. The prediction assumed an instruction would be
-obeyed; it was not, consistently.
-
-**`sentiment_unstable` — predicted pass, observed FAIL, agreement 0.33.**
-Registered reasoning: *"A backhanded compliment that resolves positive on
-balance. We predict the model agrees, and predict it does so consistently."* Two
-of three outputs said `positive`, one said `negative`. Under majority voting
-this case would have been recorded as a clean pass and the instability would
-have vanished from the report entirely. That is precisely why there is no
-majority voting.
-
-The two cases predicted to fail — `sentiment_ambiguous_hedge` and
-`measurement_unit_literal` — did fail, so they are **not** misses.
-`measurement_unit_literal` is a deliberately badly specified case: the grader
-demands `"m/s"` while the prompt spells the unit out in words and never asks for
-symbol form. It is kept, rather than fixed, so the suite contains a visible
-example of a case whose failure is the case's fault and not the model's.
+`invoice_line_items` misses because the fixture adds a `Total` summary row.
+`sentiment_unstable` misses at agreement 0.33 with outputs
+`[positive, negative, positive]` — **2 of 3 passing.** Under majority voting
+that case records as a clean pass and its instability vanishes from the report
+entirely. It is the case the live run did not happen to produce, and the reason
+the no-voting rule is written the way it is.
 
 `sentiment_retry_then_ok` shows 6 attempts across 3 outputs: its fixture scripts
-a 529 on the first attempt of every call, so the retry path is exercised on every
-default run and the attempt records are never empty.
+a 529 on the first attempt of every call, so the retry path is exercised on
+every default run and the attempt records are never empty.
 
-Regenerate all of this with `python -m evalkit report`; the full markdown lands
-in `runs/report.md` and the machine-readable form in `runs/results.json`.
+Regenerate either with `python -m evalkit report`; the markdown lands in
+`runs/report.md` and the machine-readable form in `runs/results.json`. `runs/`
+is gitignored — the one published live run under `results/` is a deliberate
+exception.
 
 ## 6. Install and use
 
