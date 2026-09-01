@@ -4,7 +4,7 @@ on:
   push:
   pull_request:
 
-# Nothing here deploys anything. Both jobs run against StubProvider and need
+# Nothing here deploys anything. Every job runs against StubProvider and needs
 # no API key; see live.yml for the opt-in job that talks to the real API.
 jobs:
   lint:
@@ -26,8 +26,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      # The package is run from source rather than installed, so that CI
-      # exercises exactly the dependency set pinned in requirements-lock.txt.
+      # Tests run from source, against the working tree.
       PYTHONPATH: src
     steps:
       - uses: actions/checkout@v4
@@ -48,3 +47,55 @@ jobs:
           python -m evalkit run
           python -m evalkit grade
           python -m evalkit report
+
+  # The packaged route. This job deliberately does NOT set PYTHONPATH: it
+  # installs the built wheel and then runs the CLI from a directory that
+  # contains no source tree, so an import can only be satisfied by the
+  # installed package. Without that, `python -m evalkit` would silently fall
+  # back to ./src and the job would prove nothing about the wheel.
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install locked dependencies
+        run: python -m pip install -r requirements-lock.txt
+
+      - name: Build sdist and wheel
+        run: python -m hatchling build
+
+      # The expected module set is derived from src/evalkit rather than listed,
+      # so a new module that fails to ship reddens this step. The first
+      # assertion refuses a vacuous pass on an empty expected set.
+      - name: Assert the wheel contains the package
+        run: |
+          python - <<'PY'
+          import glob, pathlib, zipfile
+
+          wheel = glob.glob("dist/*.whl")[0]
+          names = set(zipfile.ZipFile(wheel).namelist())
+          expected = {f"evalkit/{p.name}" for p in pathlib.Path("src/evalkit").glob("*.py")}
+
+          assert expected, "no source modules found under src/evalkit"
+          missing = sorted(expected - names)
+          assert not missing, f"missing from {wheel}: {missing}"
+          assert any(n.endswith("dist-info/licenses/LICENSE") for n in names), \
+              f"LICENSE not carried in {wheel}"
+
+          print(f"{wheel} carries {len(expected)} modules at evalkit/ plus LICENSE")
+          for name in sorted(names):
+              print(f"  {name}")
+          PY
+
+      - name: Install the wheel
+        run: python -m pip install dist/*.whl
+
+      - name: Run the CLI from the installed package
+        run: |
+          mkdir -p "${RUNNER_TEMP}/no-source-here"
+          cd "${RUNNER_TEMP}/no-source-here"
+          python -c "import evalkit, pathlib; print('imported from', pathlib.Path(evalkit.__file__).parent)"
+          python -m evalkit report --help
+          python -m evalkit --help

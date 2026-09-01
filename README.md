@@ -199,26 +199,56 @@ in `runs/report.md` and the machine-readable form in `runs/results.json`.
 Requires Python ≥ 3.11. Dependencies are pinned in `requirements-lock.txt`,
 which is what CI installs and what the results above were produced under.
 
+The normal route is to install the package:
+
 ```bash
 python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements-lock.txt
+.venv/bin/python -m pip install .
 ```
 
-The package is **run from source rather than installed** — that is how CI runs
-it, so it is the path that is actually exercised:
+Then the CLI is available as a module:
 
 ```bash
-export PYTHONPATH=src
-
 python -m evalkit predict   # pre-register. write-once.
 python -m evalkit run       # k runs per case; verifies the lock first
 python -m evalkit grade     # writes runs/results.json
 python -m evalkit report    # writes runs/report.md, prints it
 ```
 
-`pyproject.toml` declares a `hatchling` build backend, but no wheel is built or
-installed anywhere in this repository or its CI, so treat packaging as
-undemonstrated.
+### Running without installing
+
+The src layout means `python -m evalkit` cannot find the package from a bare
+checkout, so the no-install route needs `src` on the path explicitly:
+
+```bash
+.venv/bin/python -m pip install -r requirements-lock.txt   # dependencies only
+export PYTHONPATH=src
+python -m evalkit predict                                  # etc., as above
+```
+
+`pytest` needs no such prefix — `pythonpath = ["src"]` in `pyproject.toml`
+handles it.
+
+### What has and has not been executed
+
+The build backend is `hatchling`, and packaging is exercised rather than merely
+declared. The `build` job in CI runs `hatchling build`, asserts that the wheel
+carries every module found under `src/evalkit/` at `evalkit/` plus the LICENSE
+— the expected set is derived from the source tree, so a module that fails to
+ship turns the job red — then installs the wheel and runs the CLI from a
+directory containing no source tree, so the import can only be satisfied by the
+installed package.
+
+Two things are worth stating precisely, because they are the difference between
+"tested" and "configured":
+
+- **`pip install .` has never been executed anywhere in this repository's
+  history.** What CI executes is `pip install dist/*.whl` after building. The
+  two differ only in whether pip drives the build step, but they are not the
+  same command and only the second one has been run.
+- **The installed route is exercised in CI, not locally.** The development
+  environment here runs from source; the wheel is built locally but never
+  installed locally.
 
 Against the real API:
 
